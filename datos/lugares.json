@@ -1,0 +1,502 @@
+[
+  {
+    "id": 1,
+    "nombre": "Parrilla Sanabria Palermo",
+    "zona": "Palermo",
+    "categoria": "parrilla",
+    "puntuacion": 4.8,
+    "horario_apertura": "20:00",
+    "horario_cierre": "00:00",
+    "costo": 3
+  },
+  {
+    "id": 2,
+    "nombre": "Don Julio Parrilla",
+    "zona": "Palermo",
+    "categoria": "parrilla",
+    "puntuacion": 4.4,
+    "horario_apertura": "11:30",
+    "horario_cierre": "01:00",
+    "costo": 3
+  },
+  {
+    "id": 3,
+    "nombre": "El Viejo Palermo Grill",
+    "zona": "Palermo",
+    "categoria": "parrilla",
+    "puntuacion": 4.4,
+    "horario_apertura": "11:30",
+    "horario_cierre": "00:00",
+    "costo": 3
+  },
+  {
+    "id": 4,
+    "nombre": "Hierro Parrilla Palermo",
+    "zona": "Palermo",
+    "categoria": "parrilla",
+    "puntuacion": 4.7,
+    "horario_apertura": "12:00",
+    "horario_cierre": "00:00",
+    "costo": 3
+  },
+  {
+    "id": 5,
+    "nombre": "Parrilla Don Benito",
+    "zona": "Palermo",
+    "categoria": "parrilla",
+    "puntuacion": 4.6,
+    "horario_apertura": "12:00",
+    "horario_cierre": "01:00",
+    "costo": 3
+  },
+  {
+    "id": 6,
+    "nombre": "La Biela",
+    "zona": "Recoleta",
+    "categoria": "cafeteria",
+    "puntuacion": 4.2,
+    "horario_apertura": "08:00",
+    "horario_cierre": "00:00",
+    "costo": 1
+  },
+  {
+    "id": 7,
+    "nombre": "Marta Cafe",
+    "zona": "Recoleta",
+    "categoria": "cafeteria",
+    "puntuacion": 4.7,
+    "horario_apertura": "08:00",
+    "horario_cierre": "20:00",
+    "costo": 1
+  },
+  {
+    "id": 8,
+    "nombre": "Confiteria Monet",
+    "zona": "Recoleta",
+    "categoria": "cafeteria",
+    "puntuacion": 4.0,
+    "horario_apertura": "07:30",
+    "horario_cierre": "00:00",
+    "costo": 1
+  },
+  {
+    "id": 9,
+    "nombre": "Roster Cafe Recoleta",
+    "zona": "Recoleta",
+    "categoria": "cafeteria",
+    "puntuacion": 4.9,
+    "horario_apertura": "09:00",
+    "horario_cierre": "13:00",
+    "costo": 1
+  },
+  {
+    "id": 10,
+    "nombre": "Bicho Cafe de Especialidad Recoleta",
+    "zona": "Recoleta",
+    "categoria": "cafeteria",
+    "puntuacion": 4.5,
+    "horario_apertura": "08:30",
+    "horario_cierre": "20:30",
+    "costo": 1
+  },
+  {
+    "id": 11,
+    "nombre": "La Puerta Roja",
+    "zona": "San Telmo",
+    "categoria": "bar",
+    "puntuacion": 4.3,
+    "horario_apertura": "12:00",
+    "horario_cierre": "04:00",
+    "costo": 2
+  },
+  {
+    "id": 12,
+    "nombre": "Valhalla",
+    "zona": "San Telmo",
+    "categoria": "bar",
+    "puntuacion": 4.2,
+    "horario_apertura": "17:30",
+    "horario_cierre": "00:30",
+    "costo": 2
+  },
+  {
+    "id": 13,
+    "nombre": "Bar Chin Chin",
+    "zona": "San Telmo",
+    "categoria": "bar",
+    "puntuacion": 4.5,
+    "horario_apertura": "17:30",
+    "horario_cierre": "01:00",
+    "costo": 2
+  },
+  {
+    "id": 14,
+    "nombre": "The Gibraltar",
+    "zona": "San Telmo",
+    "categoria": "bar",
+    "puntuacion": 4.4,
+    "horario_apertura": "16:00",
+    "horario_cierre": "02:00",
+    "costo": 2
+  },
+  {
+    "id": 15,
+    "nombre": "Pier 54 San Telmo",
+    "zona": "San Telmo",
+    "categoria": "bar",
+    "puntuacion": 4.0,
+    "horario_apertura": "17:00",
+    "horario_cierre": "02:00",
+    "costo": 2
+  },
+  {
+    "id": 16,
+    "nombre": "VARESE HELADERIA",
+    "zona": "Belgrano",
+    "categoria": "heladeria",
+    "puntuacion": 4.9,
+    "horario_apertura": "07:00",
+    "horario_cierre": "01:00",
+    "costo": 1
+  },
+  {
+    "id": 17,
+    "nombre": "ITALIA BELGRANO",
+    "zona": "Belgrano",
+    "categoria": "heladeria",
+    "puntuacion": 4.8,
+    "horario_apertura": "13:15",
+    "horario_cierre": "00:00",
+    "costo": 1
+  },
+  {
+    "id": 18,
+    "nombre": "Nicolo Helados",
+    "zona": "Belgrano",
+    "categoria": "heladeria",
+    "puntuacion": 4.3,
+    "horario_apertura": "12:00",
+    "horario_cierre": "00:00",
+    "costo": 1
+  },
+  {
+    "id": 19,
+    "nombre": "Lucciano's",
+    "zona": "Belgrano",
+    "categoria": "heladeria",
+    "puntuacion": 4.9,
+    "horario_apertura": "11:00",
+    "horario_cierre": "01:00",
+    "costo": 1
+  },
+  {
+    "id": 20,
+    "nombre": "Kremowy",
+    "zona": "Belgrano",
+    "categoria": "heladeria",
+    "puntuacion": 3.8,
+    "horario_apertura": "10:00",
+    "horario_cierre": "01:30",
+    "costo": 1
+  },
+  {
+    "id": 21,
+    "nombre": "Happening Puerto Madero",
+    "zona": "Puerto Madero",
+    "categoria": "restaurante",
+    "puntuacion": 4.4,
+    "horario_apertura": "12:00",
+    "horario_cierre": "01:00",
+    "costo": 3
+  },
+  {
+    "id": 22,
+    "nombre": "Maridaje Puerto Madero",
+    "zona": "Puerto Madero",
+    "categoria": "restaurante",
+    "puntuacion": 4.8,
+    "horario_apertura": "12:00",
+    "horario_cierre": "00:00",
+    "costo": 3
+  },
+  {
+    "id": 23,
+    "nombre": "Puerto Cristal",
+    "zona": "Puerto Madero",
+    "categoria": "restaurante",
+    "puntuacion": 4.7,
+    "horario_apertura": "12:00",
+    "horario_cierre": "02:00",
+    "costo": 3
+  },
+  {
+    "id": 24,
+    "nombre": "PATIO MADERO",
+    "zona": "Puerto Madero",
+    "categoria": "restaurante",
+    "puntuacion": 4.5,
+    "horario_apertura": "08:00",
+    "horario_cierre": "00:30",
+    "costo": 3
+  },
+  {
+    "id": 25,
+    "nombre": "Estilo Campo | Parrilla & Asador Criollo",
+    "zona": "Puerto Madero",
+    "categoria": "restaurante",
+    "puntuacion": 4.5,
+    "horario_apertura": "12:00",
+    "horario_cierre": "16:00",
+    "costo": 3
+  },
+  {
+    "id": 26,
+    "nombre": "Pizzeria Napoles",
+    "zona": "Villa Crespo",
+    "categoria": "pizzeria",
+    "puntuacion": 4.3,
+    "horario_apertura": "08:00",
+    "horario_cierre": "03:00",
+    "costo": 2
+  },
+  {
+    "id": 27,
+    "nombre": "Gordo Chanta Pizza",
+    "zona": "Villa Crespo",
+    "categoria": "pizzeria",
+    "puntuacion": 4.3,
+    "horario_apertura": "19:00",
+    "horario_cierre": "00:00",
+    "costo": 2
+  },
+  {
+    "id": 28,
+    "nombre": "PUNTA MORENO",
+    "zona": "Villa Crespo",
+    "categoria": "pizzeria",
+    "puntuacion": 4.3,
+    "horario_apertura": "19:30",
+    "horario_cierre": "23:30",
+    "costo": 2
+  },
+  {
+    "id": 29,
+    "nombre": "Il Migliore",
+    "zona": "Villa Crespo",
+    "categoria": "pizzeria",
+    "puntuacion": 4.4,
+    "horario_apertura": "09:00",
+    "horario_cierre": "00:30",
+    "costo": 2
+  },
+  {
+    "id": 30,
+    "nombre": "Pizza Franca | Horno Napoletano",
+    "zona": "Villa Crespo",
+    "categoria": "pizzeria",
+    "puntuacion": 5.0,
+    "horario_apertura": "19:00",
+    "horario_cierre": "23:30",
+    "costo": 2
+  },
+  {
+    "id": 31,
+    "nombre": "La Capitana - Bodegon y Vermuteria",
+    "zona": "Almagro",
+    "categoria": "bodegon",
+    "puntuacion": 4.9,
+    "horario_apertura": "19:00",
+    "horario_cierre": "01:00",
+    "costo": 2
+  },
+  {
+    "id": 32,
+    "nombre": "Los Orientales",
+    "zona": "Almagro",
+    "categoria": "bodegon",
+    "puntuacion": 4.3,
+    "horario_apertura": "09:00",
+    "horario_cierre": "23:45",
+    "costo": 2
+  },
+  {
+    "id": 33,
+    "nombre": "Guarda La Vieja",
+    "zona": "Almagro",
+    "categoria": "bodegon",
+    "puntuacion": 4.3,
+    "horario_apertura": "17:00",
+    "horario_cierre": "02:00",
+    "costo": 2
+  },
+  {
+    "id": 34,
+    "nombre": "Cantina Pierino",
+    "zona": "Almagro",
+    "categoria": "bodegon",
+    "puntuacion": 4.3,
+    "horario_apertura": "20:00",
+    "horario_cierre": "00:00",
+    "costo": 2
+  },
+  {
+    "id": 35,
+    "nombre": "Damblee",
+    "zona": "Almagro",
+    "categoria": "bodegon",
+    "puntuacion": 4.3,
+    "horario_apertura": "07:00",
+    "horario_cierre": "01:00",
+    "costo": 2
+  },
+  {
+    "id": 36,
+    "nombre": "Strange Brewing",
+    "zona": "Chacarita",
+    "categoria": "bar",
+    "puntuacion": 4.6,
+    "horario_apertura": "16:00",
+    "horario_cierre": "00:00",
+    "costo": 2
+  },
+  {
+    "id": 37,
+    "nombre": "Strange 2",
+    "zona": "Chacarita",
+    "categoria": "bar",
+    "puntuacion": 4.6,
+    "horario_apertura": "18:00",
+    "horario_cierre": "01:00",
+    "costo": 2
+  },
+  {
+    "id": 38,
+    "nombre": "Icaro Cocktail Bar",
+    "zona": "Chacarita",
+    "categoria": "bar",
+    "puntuacion": 5.0,
+    "horario_apertura": "19:30",
+    "horario_cierre": "02:00",
+    "costo": 2
+  },
+  {
+    "id": 39,
+    "nombre": "Charlone",
+    "zona": "Chacarita",
+    "categoria": "bar",
+    "puntuacion": 4.5,
+    "horario_apertura": "18:00",
+    "horario_cierre": "00:00",
+    "costo": 2
+  },
+  {
+    "id": 40,
+    "nombre": "Bodega de Experiencias",
+    "zona": "Chacarita",
+    "categoria": "bar",
+    "puntuacion": 4.9,
+    "horario_apertura": "16:00",
+    "horario_cierre": "22:00",
+    "costo": 2
+  },
+  {
+    "id": 41,
+    "nombre": "Palermo Wine Club",
+    "zona": "Palermo Soho",
+    "categoria": "bar",
+    "puntuacion": 4.4,
+    "horario_apertura": "19:00",
+    "horario_cierre": "00:30",
+    "costo": 2
+  },
+  {
+    "id": 42,
+    "nombre": "La Malbequeria",
+    "zona": "Palermo Soho",
+    "categoria": "bar",
+    "puntuacion": 4.4,
+    "horario_apertura": "12:00",
+    "horario_cierre": "01:00",
+    "costo": 2
+  },
+  {
+    "id": 43,
+    "nombre": "COWI | Restaurante & Wine Bar Palermo",
+    "zona": "Palermo Soho",
+    "categoria": "bar",
+    "puntuacion": 4.6,
+    "horario_apertura": "18:00",
+    "horario_cierre": "01:00",
+    "costo": 2
+  },
+  {
+    "id": 44,
+    "nombre": "Backroom Bar",
+    "zona": "Palermo Soho",
+    "categoria": "bar",
+    "puntuacion": 4.6,
+    "horario_apertura": "12:00",
+    "horario_cierre": "05:00",
+    "costo": 2
+  },
+  {
+    "id": 45,
+    "nombre": "Overo Bar de Copas",
+    "zona": "Palermo Soho",
+    "categoria": "bar",
+    "puntuacion": 4.6,
+    "horario_apertura": "18:00",
+    "horario_cierre": "01:00",
+    "costo": 2
+  },
+  {
+    "id": 46,
+    "nombre": "Angiru cafe",
+    "zona": "Colegiales",
+    "categoria": "cafeteria",
+    "puntuacion": 4.9,
+    "horario_apertura": "08:00",
+    "horario_cierre": "20:00",
+    "costo": 1
+  },
+  {
+    "id": 47,
+    "nombre": "Casa Basile",
+    "zona": "Colegiales",
+    "categoria": "cafeteria",
+    "puntuacion": 4.8,
+    "horario_apertura": "12:00",
+    "horario_cierre": "20:00",
+    "costo": 1
+  },
+  {
+    "id": 48,
+    "nombre": "Crisol Colegiales",
+    "zona": "Colegiales",
+    "categoria": "cafeteria",
+    "puntuacion": 4.4,
+    "horario_apertura": "07:00",
+    "horario_cierre": "21:00",
+    "costo": 1
+  },
+  {
+    "id": 49,
+    "nombre": "Forno 1977 Colegiales",
+    "zona": "Colegiales",
+    "categoria": "cafeteria",
+    "puntuacion": 4.7,
+    "horario_apertura": "07:00",
+    "horario_cierre": "20:00",
+    "costo": 1
+  },
+  {
+    "id": 50,
+    "nombre": "Uneak",
+    "zona": "Colegiales",
+    "categoria": "cafeteria",
+    "puntuacion": 4.9,
+    "horario_apertura": "08:30",
+    "horario_cierre": "19:00",
+    "costo": 1
+  }
+]

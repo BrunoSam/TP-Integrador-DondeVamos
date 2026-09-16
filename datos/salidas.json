@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "nombre": "Noche de asado en Palermo",
+    "participantes": ["Bruno", "Camila", "Dani"]
+  },
+  {
+    "id": 2,
+    "nombre": "Café en Recoleta",
+    "participantes": ["Bruno", "Camila"]
+  },
+  {
+    "id": 3,
+    "nombre": "Bar con amigos en San Telmo",
+    "participantes": ["Camila", "Dani", "Sofía", "Tomás"]
+  },
+  {
+    "id": 4,
+    "nombre": "Helado en Belgrano",
+    "participantes": ["Bruno", "Sofía"]
+  }
+]
