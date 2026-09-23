@@ -2,3 +2,6 @@ __pycache__/
 *.pyc
 .vscode/
 .idea/
+
+# Datasets generados para los experimentos del TP2 (reproducibles con datos/generar.py)
+datos/lugares_*.json
