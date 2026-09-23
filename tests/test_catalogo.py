@@ -43,6 +43,35 @@ class TestCatalogo(unittest.TestCase):
         resultados = self.catalogo.buscar_parcial("palermo")
         self.assertTrue(len(resultados) >= 4)
 
+    def test_buscar_binaria_requiere_ordenar(self):
+        self.catalogo.ordenar_por_titulo()
+        resultado = self.catalogo.buscar_binaria("don julio parrilla")
+        self.assertIsNotNone(resultado)
+        self.assertEqual(resultado.nombre, "Don Julio Parrilla")
+
+    def test_buscar_binaria_ignora_mayusculas_y_acentos(self):
+        self.catalogo.ordenar_por_titulo()
+        resultado = self.catalogo.buscar_binaria("LA BIELA")
+        self.assertIsNotNone(resultado)
+        self.assertEqual(resultado.nombre, "La Biela")
+
+    def test_buscar_binaria_devuelve_none_si_no_existe(self):
+        self.catalogo.ordenar_por_titulo()
+        self.assertIsNone(self.catalogo.buscar_binaria("no-existe"))
+
+    def test_ordenar_por_titulo_ordena_por_nombre_normalizado(self):
+        self.catalogo.ordenar_por_titulo()
+        nombres = [l.nombre for l in self.catalogo.listar()]
+        self.assertEqual(nombres, sorted(nombres, key=str.lower))
+
+    def test_buscar_y_binaria_son_consistentes(self):
+        self.catalogo.ordenar_por_titulo()
+        for nombre in ["Don Julio Parrilla", "La Biela", "no-existe", "EL VIEJO PALERMO GRILL"]:
+            self.assertEqual(
+                self.catalogo.buscar(nombre),
+                self.catalogo.buscar_binaria(nombre),
+            )
+
     def test_lugar_tiene_horarios_y_costo(self):
         resultado = self.catalogo.buscar("Don Julio Parrilla")
         self.assertIsNotNone(resultado)

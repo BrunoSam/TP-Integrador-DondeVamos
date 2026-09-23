@@ -1,3 +1,4 @@
+import bisect
 import json
 import unicodedata
 
@@ -20,6 +21,7 @@ class Catalogo:
     def __init__(self):
         self._lugares = []
         self._salidas = []
+        self._claves = []
 
     def cargar_desde_json(self, ruta):
         with open(ruta, encoding="utf-8") as archivo:
@@ -42,6 +44,19 @@ class Catalogo:
         for lugar in self._lugares:
             if _normalizar(lugar.nombre) == _normalizar(nombre):
                 return lugar
+        return None
+
+    def ordenar_por_titulo(self):
+        """Ordena la lista por nombre normalizado y arma el arreglo de claves."""
+        self._lugares.sort(key=lambda l: _normalizar(l.nombre))
+        self._claves = [_normalizar(l.nombre) for l in self._lugares]
+
+    def buscar_binaria(self, nombre):
+        """Búsqueda binaria sobre la lista ordenada. O(log n)."""
+        clave = _normalizar(nombre)
+        indice = bisect.bisect_left(self._claves, clave)
+        if indice < len(self._claves) and self._claves[indice] == clave:
+            return self._lugares[indice]
         return None
 
     def buscar_parcial(self, texto):
