@@ -18,6 +18,15 @@ python main.py
 python -m unittest discover tests
 ```
 
+## Experimentos (TP2)
+
+```bash
+python datos/generar.py                       # datasets sintéticos (100 a 100.000)
+python algoritmos/experimentos/medicion.py    # mide secuencial vs binaria
+```
+
+Informe y análisis: [`docs/tp2-experimentos.md`](docs/tp2-experimentos.md).
+
 ## Demo
 
 ![Demo de la v1](docs/capturas/tp1-demo.png)
@@ -46,11 +55,14 @@ proyecto/
 ├── datos/
 │   ├── lugares.json
 │   ├── lugares-antiguo.json
-│   └── salidas.json
-├── estructuras/      ← próximos TPs (TP3+)
-├── algoritmos/       ← próximos TPs (TP3+)
+│   ├── salidas.json
+│   └── generar.py        ← TP2 (datasets sintéticos para experimentos)
+├── algoritmos/
+│   └── experimentos/     ← TP2 (medicion.py, grafico.py)
+├── estructuras/          ← próximos TPs (TP3+)
+├── algoritmos/           ← próximos TPs (TP3+)
 └── tests/
     └── test_catalogo.py
 ```
 
-En TP0 se documentó la propuesta y se preparó el repositorio. En TP1 se implementó la v1: modelo de dominio, catálogo, terminal y pruebas.
+En TP0 se documentó la propuesta y se preparó el repositorio. En TP1 se implementó la v1: modelo de dominio, catálogo, terminal y pruebas. En TP2 se analizó la complejidad de la búsqueda por nombre: se comparó la búsqueda secuencial (O(n)) con una búsqueda binaria sobre lista ordenada (O(log n)), midiendo con datasets de 100 a 100.000 lugares (`docs/tp2-experimentos.md`).

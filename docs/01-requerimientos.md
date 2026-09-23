@@ -63,6 +63,8 @@ La Biela — cafeteria (Recoleta) [⭐ 4.2 | $ | 08:00-00:00]
 | RF05 | El sistema debe sugerir lugares a partir de las preferencias, la cantidad de personas, las fechas y el presupuesto del grupo | Funcional |
 | RNF01 | La búsqueda debe mantener un tiempo de respuesta aceptable con un volumen superior a 1.000 lugares | No funcional |
 
+> **Estado TP2:** la v2 incorpora una segunda estrategia de búsqueda (`Catalogo.buscar_binaria`, O(log n) sobre lista ordenada) y los experimentos de `docs/tp2-experimentos.md` verifican el RNF01: con 100.000 lugares la búsqueda binaria responde en <0,01 ms, mientras que la secuencial (O(n)) tarda ~800 ms. El árbol del TP3 reemplazará a la lista ordenada manteniendo el mismo O(log n).
+
 ## 7. Fuera de alcance (por ahora)
 
 - No se implementan autenticación ni perfiles de usuario.
