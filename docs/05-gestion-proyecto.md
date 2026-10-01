@@ -104,7 +104,10 @@ El árbol entró como índice complementario, no como reemplazo de la lista: `fi
 
 El merge de las dos versiones del árbol encontró un bug que las pruebas no veían: `postorder()` se saltaba el subárbol izquierdo de cualquier nodo sin hijo derecho, y con los 50 lugares reales devolvía 48. Se detectó recién al agregar las pruebas de los recorridos a través del catálogo, y se corrigió comparando los recorridos contra el conjunto de valores en vez de contra una lista escrita a mano.
 
-Qué mejorar: el árbol se desbalancea si las inserciones llegan ya ordenadas (altura = n). El AVL del TP4 es la respuesta.
+Qué mejorar:
+
+- El árbol se desbalancea si las inserciones llegan ya ordenadas (altura = n). El AVL del TP4 es la respuesta.
+- El TP3 entró en **un solo commit** (`efaad7d`), así que no respetamos el compromiso del retro del TP1 de commits por unidad de trabajo. La causa fue práctica: el trabajo del TP3 y el merge del árbol del equipo quedaron intercalados en los mismos archivos, y con el plazo de las 00:00 separar el historial exigía stagear porciones de archivo a mano. Además, rehacer el commit después habría movido su fecha al día siguiente y hecho que el TP3 pareciera entregado fuera de plazo. Queda asumido: el hábito se retoma en el TP4.
 
 ---
 
@@ -112,3 +115,4 @@ Qué mejorar: el árbol se desbalancea si las inserciones llegan ya ordenadas (a
 
 - [ ] Cargar las historias de TP3 como tarjetas en el tablero de Trello.
 - [ ] Enviar la nómina del grupo al docente.
+- [ ] Abrir el TP4 con commits por unidad de trabajo, como en el TP2: estructura AVL, integración en el catálogo y medición.
