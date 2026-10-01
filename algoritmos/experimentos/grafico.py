@@ -1,7 +1,8 @@
-"""Genera el gráfico log-log del experimento TP2 (opcional).
+"""Genera el gráfico log-log del experimento (opcional).
 
 Uso:  python algoritmos/experimentos/grafico.py
-Usa los tiempos reales de la medición y guarda la imagen en docs/capturas/experimento-tp2.png
+Usa los tiempos reales de la medición y guarda la imagen en
+docs/capturas/experimento-tp3.png
 """
 
 import sys
@@ -15,29 +16,36 @@ except ImportError:
     print("matplotlib no está instalado; el gráfico es opcional.")
     sys.exit(0)
 
-from algoritmos.experimentos.medicion import obtener_tiempos
+from algoritmos.experimentos.medicion import ESTRATEGIAS, obtener_tiempos
 
 
 def main() -> None:
-    tamaños, secuencial, binaria = obtener_tiempos()
-    print(f"{'N':>8}\t{'secuencial_ms':>14}\t{'binaria_ms':>11}")
-    for n, s, b in zip(tamaños, secuencial, binaria):
-        print(f"{n:>8}\t{s:>14.4f}\t{b:>11.4f}")
+    datos = obtener_tiempos("ultimo")
+    tamanos = datos["tamanos"]
 
-    plt.plot(tamaños, secuencial, label="secuencial", marker="o")
-    plt.plot(tamaños, binaria, label="binaria", marker="s")
+    print(f"{'N':>8}\t{'altura':>8}" + "".join(
+        f"{etiqueta + '_ms':>16}" for etiqueta, _ in ESTRATEGIAS
+    ))
+    for i, n in enumerate(tamanos):
+        fila = f"{n:>8}\t{datos['alturas'][i]:>8}"
+        for etiqueta, _ in ESTRATEGIAS:
+            fila += f"{datos[etiqueta][i]:>16.4f}"
+        print(fila)
+
+    for etiqueta, _ in ESTRATEGIAS:
+        plt.plot(tamanos, datos[etiqueta], label=etiqueta, marker="o")
     plt.xscale("log")
     plt.yscale("log")
     plt.xlabel("N elementos")
     plt.ylabel("Tiempo (ms)")
-    plt.title("Búsqueda por nombre: secuencial vs binaria (log-log)")
+    plt.title("Búsqueda exacta por nombre: secuencial vs binaria vs árbol BST (log-log)")
     plt.legend()
     plt.grid(True, which="both", ls=":")
 
-    salida = Path(__file__).resolve().parents[2] / "docs" / "capturas" / "experimento-tp2.png"
+    salida = Path(__file__).resolve().parents[2] / "docs" / "capturas" / "experimento-tp3.png"
     salida.parent.mkdir(parents=True, exist_ok=True)
     plt.savefig(salida)
-    print(f"Gráfico guardado en {salida}")
+    print(f"\nGráfico guardado en {salida}")
 
 
 if __name__ == "__main__":

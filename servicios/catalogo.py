@@ -2,6 +2,7 @@ import bisect
 import json
 import unicodedata
 
+from estructuras.arbol_binario import ArbolBinarioBusqueda
 from modelos.lugar import Lugar
 from modelos.salida import Salida
 
@@ -22,6 +23,7 @@ class Catalogo:
         self._lugares = []
         self._salidas = []
         self._claves = []
+        self.indexar()
 
     def cargar_desde_json(self, ruta):
         with open(ruta, encoding="utf-8") as archivo:
@@ -39,6 +41,16 @@ class Catalogo:
                     item["costo"],
                 )
             )
+        self.indexar()
+
+    def agregar_lugar(self, lugar):
+        """Agrega un lugar a la lista y lo inserta en el árbol.
+
+        No hay que reindexar: el árbol se mantiene al día lugar por lugar, que es
+        justamente la ventaja de insertar en O(log n) sin tocar el resto.
+        """
+        self._lugares.append(lugar)
+        self._arbol.insertar(lugar)
 
     def buscar(self, nombre):
         for lugar in self._lugares:
@@ -58,6 +70,34 @@ class Catalogo:
         if indice < len(self._claves) and self._claves[indice] == clave:
             return self._lugares[indice]
         return None
+
+    def indexar(self):
+        """Construye el BST con los lugares actuales, en orden de carga."""
+        self._arbol = ArbolBinarioBusqueda(
+            clave=lambda lugar: _normalizar(lugar.nombre)
+        )
+        for lugar in self._lugares:
+            self._arbol.insertar(lugar)
+
+    def buscar_arbol(self, nombre):
+        """Búsqueda exacta en el BST. O(log n) promedio. None si no existe."""
+        return self._arbol.buscar(_normalizar(nombre))
+
+    def listar_ordenado(self):
+        """Lugares en orden alfabético: recorrido inorder del árbol."""
+        return self._arbol.inorder()
+
+    def listar_preorder(self):
+        """Lugares en preorden (raíz, izq, der): la raíz del árbol primero."""
+        return self._arbol.preorder()
+
+    def listar_postorder(self):
+        """Lugares en postorden (izq, der, raíz): la raíz del árbol al final."""
+        return self._arbol.postorder()
+
+    def altura_arbol(self):
+        """Niveles del camino más largo. Sirve para verificar el balance."""
+        return self._arbol.altura()
 
     def buscar_parcial(self, texto):
         """Búsqueda por coincidencia parcial: 'café' encuentra 'Café Tortoni'."""
@@ -81,6 +121,9 @@ class Catalogo:
                     item["participantes"],
                 )
             )
+
+    def agregar_salida(self, salida):
+        self._salidas.append(salida)
 
     def listar_salidas(self):
         return list(self._salidas)
