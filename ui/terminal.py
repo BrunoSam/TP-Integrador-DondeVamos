@@ -5,7 +5,8 @@ from servicios.catalogo import Catalogo
 ESTRATEGIAS = {
     "1": ("Secuencial", "buscar", "O(n): recorre la lista"),
     "2": ("Binaria", "buscar_binaria", "O(log n): lista ordenada"),
-    "3": ("Árbol BST", "buscar_arbol", "O(log n): índice del catálogo"),
+    "3": ("Árbol BST", "buscar_arbol", "O(log n) promedio: índice BST"),
+    "4": ("Árbol AVL", "buscar_avl", "O(log n) garantizado: índice AVL"),
 }
 
 
@@ -31,6 +32,8 @@ class Terminal:
                 self._participantes()
             elif opcion == "5":
                 self._buscar_exacto()
+            elif opcion == "6":
+                self._comparar_arboles()
             elif opcion == "0":
                 print("¡Hasta la próxima!")
                 break
@@ -48,6 +51,7 @@ class Terminal:
         print("3. Filtrar por categoría")
         print("4. Ver participantes por salida")
         print("5. Buscar por nombre exacto (comparar estrategias)")
+        print("6. Comparar BST vs AVL (desbalance)")
         print("0. Salir")
         print("-" * 45)
 
@@ -80,11 +84,11 @@ class Terminal:
         print("\nEstrategias:")
         for opcion, (titulo, _, complejidad) in ESTRATEGIAS.items():
             print(f"  {opcion}) {titulo:<12} {complejidad}")
-        print("  4) Las tres")
+        print("  5) Las cuatro")
 
         opcion = input("Estrategia: ").strip()
 
-        if opcion == "4":
+        if opcion == "5":
             elegidas = list(ESTRATEGIAS)
         elif opcion in ESTRATEGIAS:
             elegidas = [opcion]
@@ -112,8 +116,25 @@ class Terminal:
 
         print(
             f"\nCatálogo: {len(self._catalogo)} lugares"
-            f" · altura del árbol: {self._catalogo.altura_arbol()} niveles"
+            f" · altura del BST: {self._catalogo.altura_arbol()} niveles"
+            f" · altura del AVL: {self._catalogo.altura_avl()} niveles"
         )
+
+    def _comparar_arboles(self) -> None:
+        """Mini ejemplo del TP4: el mismo catálogo insertado EN ORDEN
+        ALFABÉTICO degenera el BST y deja al AVL balanceado."""
+        medidas = self._catalogo.comparar_bst_vs_avl()
+        n = len(self._catalogo)
+
+        print(f"\n--- BST vs AVL con {n} lugares en orden alfabético ---")
+        print(f"{'Árbol':<6}{'Altura':>8}{'Construcción':>16}")
+        for etiqueta in ("BST", "AVL"):
+            datos = medidas[etiqueta]
+            print(f"{etiqueta:<6}{datos['altura']:>8}{datos['ms']:>13.4f} ms")
+
+        print("\nEl BST degenera en una lista enlazada (altura = n): buscar pasa")
+        print("de O(log n) a O(n). El AVL se rebalancea con rotaciones y mantiene")
+        print("la altura en O(log n) sin importar el orden de inserción.")
 
     def _listar(self) -> None:
         print("\nOrden:")

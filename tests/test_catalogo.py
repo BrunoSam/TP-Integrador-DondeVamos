@@ -275,5 +275,64 @@ class TestCatalogoArbol(unittest.TestCase):
         return [lugar.nombre for lugar in self.catalogo.listar()]
 
 
+class TestCatalogoAVL(unittest.TestCase):
+    """Integración del AVL (TP4) dentro del catálogo."""
+
+    def setUp(self):
+        self.catalogo = Catalogo()
+        self.catalogo.cargar_desde_json("datos/lugares.json")
+
+    def test_el_avl_se_construye_al_cargar(self):
+        self.assertEqual(len(self.catalogo._avl), len(self.catalogo))
+        self.assertTrue(self.catalogo._avl.esta_balanceado())
+
+    def test_buscar_avl_encuentra_el_lugar(self):
+        resultado = self.catalogo.buscar_avl("don julio parrilla")
+        self.assertIsNotNone(resultado)
+        self.assertEqual(resultado.nombre, "Don Julio Parrilla")
+
+    def test_buscar_avl_ignora_mayusculas_y_acentos(self):
+        resultado = self.catalogo.buscar_avl("LA BIELA")
+        self.assertIsNotNone(resultado)
+        self.assertEqual(resultado.nombre, "La Biela")
+
+    def test_buscar_avl_devuelve_none_si_no_existe(self):
+        self.assertIsNone(self.catalogo.buscar_avl("no-existe"))
+
+    def test_buscar_avl_y_secuencial_son_consistentes(self):
+        for nombre in self.catalogo.listar():
+            with self.subTest(nombre=nombre.nombre):
+                self.assertEqual(
+                    self.catalogo.buscar(nombre.nombre),
+                    self.catalogo.buscar_avl(nombre.nombre),
+                )
+
+    def test_agregar_lugar_lo_hace_buscable_en_el_avl_sin_reindexar(self):
+        self.catalogo.agregar_lugar(
+            Lugar(999, "El Nuevo", "Palermo", "bar", 4.0, "20:00", "02:00", 2)
+        )
+        self.assertEqual(len(self.catalogo._avl), len(self.catalogo))
+        self.assertTrue(self.catalogo._avl.esta_balanceado())
+        self.assertIsNotNone(self.catalogo.buscar_avl("el nuevo"))
+
+    def test_altura_avl_sigue_logaritmica_con_insercion_ordenada(self):
+        """El punto del TP4: con la lista ya ordenada el BST degenera (altura = n)
+        pero el AVL se mantiene en orden logarítmico."""
+        self.catalogo.ordenar_por_titulo()
+        self.catalogo.indexar()
+        total = len(self.catalogo)
+        self.assertEqual(self.catalogo.altura_arbol(), total)   # BST degenerado
+        self.assertLess(self.catalogo.altura_avl(), 15)          # AVL ~log₂ n
+        self.assertTrue(self.catalogo._avl.esta_balanceado())
+
+    def test_comparar_bst_vs_avl_expone_la_degeneracion(self):
+        medidas = self.catalogo.comparar_bst_vs_avl()
+        total = len(self.catalogo)
+        self.assertEqual(medidas["BST"]["altura"], total)
+        self.assertLess(medidas["AVL"]["altura"], total / 2)
+        self.assertIn("ms", medidas["BST"])
+        self.assertIn("ms", medidas["AVL"])
+
+
 if __name__ == "__main__":
     unittest.main()

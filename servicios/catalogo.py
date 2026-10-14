@@ -1,7 +1,9 @@
 import bisect
 import json
+import time
 import unicodedata
 
+from estructuras.arbol_avl import ArbolAVL
 from estructuras.arbol_binario import ArbolBinarioBusqueda
 from modelos.lugar import Lugar
 from modelos.salida import Salida
@@ -44,13 +46,14 @@ class Catalogo:
         self.indexar()
 
     def agregar_lugar(self, lugar):
-        """Agrega un lugar a la lista y lo inserta en el árbol.
+        """Agrega un lugar a la lista y lo inserta en ambos árboles.
 
-        No hay que reindexar: el árbol se mantiene al día lugar por lugar, que es
-        justamente la ventaja de insertar en O(log n) sin tocar el resto.
+        No hay que reindexar: los árboles se mantienen al día lugar por lugar,
+        que es justamente la ventaja de insertar en O(log n) sin tocar el resto.
         """
         self._lugares.append(lugar)
         self._arbol.insertar(lugar)
+        self._avl.insertar(lugar)
 
     def buscar(self, nombre):
         for lugar in self._lugares:
@@ -72,16 +75,27 @@ class Catalogo:
         return None
 
     def indexar(self):
-        """Construye el BST con los lugares actuales, en orden de carga."""
+        """Construye el BST y el AVL con los lugares actuales, en orden de carga.
+
+        El AVL se arma sobre el mismo orden, pero eso ya no importa: se
+        rebalancea solo, así que la altura queda en O(log n) sin importar cómo
+        lleguen las claves. El BST se conserva como término de comparación.
+        """
         self._arbol = ArbolBinarioBusqueda(
             clave=lambda lugar: _normalizar(lugar.nombre)
         )
+        self._avl = ArbolAVL(clave=lambda lugar: _normalizar(lugar.nombre))
         for lugar in self._lugares:
             self._arbol.insertar(lugar)
+            self._avl.insertar(lugar)
 
     def buscar_arbol(self, nombre):
         """Búsqueda exacta en el BST. O(log n) promedio. None si no existe."""
         return self._arbol.buscar(_normalizar(nombre))
+
+    def buscar_avl(self, nombre):
+        """Búsqueda exacta en el AVL. O(log n) garantizado. None si no existe."""
+        return self._avl.buscar(_normalizar(nombre))
 
     def listar_ordenado(self):
         """Lugares en orden alfabético: recorrido inorder del árbol."""
@@ -96,8 +110,35 @@ class Catalogo:
         return self._arbol.postorder()
 
     def altura_arbol(self):
-        """Niveles del camino más largo. Sirve para verificar el balance."""
+        """Niveles del camino más largo del BST. Sirve para verificar el balance."""
         return self._arbol.altura()
+
+    def altura_avl(self):
+        """Altura del AVL. Siempre O(log n), sin importar el orden de carga."""
+        return self._avl.altura()
+
+    def comparar_bst_vs_avl(self):
+        """Demo del TP4: mide BST y AVL con los mismos lugares insertados en
+        orden alfabético, que es el peor caso del BST sin balancear.
+
+        Devuelve, por etiqueta, la altura resultante y el tiempo de construcción
+        en milisegundos. La construcción se paga una sola vez y es lo que deja
+        en evidencia la degeneración del BST frente al AVL.
+        """
+        ordenados = sorted(self._lugares, key=lambda l: _normalizar(l.nombre))
+        resultado = {}
+        for etiqueta, arbol in (
+            ("BST", ArbolBinarioBusqueda(clave=lambda l: _normalizar(l.nombre))),
+            ("AVL", ArbolAVL(clave=lambda l: _normalizar(l.nombre))),
+        ):
+            inicio = time.perf_counter()
+            for lugar in ordenados:
+                arbol.insertar(lugar)
+            resultado[etiqueta] = {
+                "altura": arbol.altura(),
+                "ms": (time.perf_counter() - inicio) * 1000,
+            }
+        return resultado
 
     def buscar_parcial(self, texto):
         """Búsqueda por coincidencia parcial: 'café' encuentra 'Café Tortoni'."""
