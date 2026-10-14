@@ -111,8 +111,42 @@ Qué mejorar:
 
 ---
 
+## Sprint TP4 (Árbol AVL)
+
+Historias:
+
+- [x] Como equipo queremos entender y reproducir el desbalance del BST del TP3.
+  - Criterio: casos de inserción ordenada ascendente, descendente y casi ordenada, con la altura medida y comparada contra n.
+- [x] Como equipo queremos un AVL genérico, no atado al dominio.
+  - Criterio: `estructuras/arbol_avl.py` con inserción que rebalancea con las cuatro rotaciones, clave inyectada como `callable` y misma API que el BST.
+- [x] Como equipo queremos garantizar O(log n) y poder verificarlo.
+  - Criterio: ningún nodo con `|factor de balance| > 1` y altura acotada por `1,44·log₂(n+2)`; hay pruebas que lo fijan.
+- [x] Como usuario quiero poder usar el AVL desde la aplicación.
+  - Criterio: `buscar_avl` como cuarta estrategia en la opción 5 y demo BST vs AVL en la opción 6.
+- [x] Como equipo queremos comparar BST contra AVL en los casos de desbalance.
+  - Criterio: misma metodología de medición del TP2/TP3, variando el **orden** de inserción; tabla de altura, construcción y búsqueda.
+- [x] Como equipo queremos documentar el experimento.
+  - Criterio: `docs/tp4-avl.md` con método, tablas, gráfico y conclusión técnica.
+- [x] Como equipo queremos retomar los commits por unidad de trabajo.
+  - Criterio: el TP4 entra en commits separados (estructura AVL, integración, experimento, documentación).
+
+**Retro TP4**:
+
+El AVL resolvió la deuda del TP3: con rotaciones de costo O(1) mantiene `|factor de balance| ≤ 1` y, con eso, la altura en O(log n) garantizado. Un efecto lateral que no esperábamos documentar: el AVL **hace segura la recursión**, porque la altura queda acotada a ~24 niveles para 100.000 claves; por eso la inserción puede ser recursiva, a diferencia del BST del TP3 que tuvo que ser iterativo.
+
+El experimento confirmó la degeneración y agregó un dato: **"casi ordenado" es casi tan malo como "ordenado"** —con 1% de vecinos intercambiados el BST quedó con altura 9.900 sobre 10.000, o sea el 99% de n—. No hace falta que los datos lleguen perfectamente ordenados para romper el BST.
+
+También quedó claro el **costo** del AVL: con datos aleatorios construye ~2,4× más lento que el BST. Su ventaja no es ser rápido en el caso típico, es serlo en el peor caso. El trade-off es overhead constante por garantía asintótica, y lo dejamos escrito sin disimularlo, igual que el resultado incómodo del TP3.
+
+Qué mejorar:
+
+- El AVL no implementa eliminación (el BST tampoco); agregarla obliga a más casos de rotación al borrar. Queda como extensión natural.
+- Repetir la medición en otra máquina para separar lo reproducible (alturas, patrón de crecimiento) del ruido (tiempos en el rango de microsegundos, donde las tablas se cruzan).
+
+---
+
 ## Pendientes de gestión
 
-- [ ] Cargar las historias de TP3 como tarjetas en el tablero de Trello.
+- [ ] Cargar las historias de TP3 y TP4 como tarjetas en el tablero de Trello.
 - [ ] Enviar la nómina del grupo al docente.
-- [ ] Abrir el TP4 con commits por unidad de trabajo, como en el TP2: estructura AVL, integración en el catálogo y medición.
+- [x] Abrir el TP4 con commits por unidad de trabajo, como en el TP2: estructura AVL, integración en el catálogo y medición.
