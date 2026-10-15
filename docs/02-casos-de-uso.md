@@ -1,6 +1,6 @@
 # Casos de uso — ¿Dónde vamos?
 
-> Actualizado en TP3. Formato de la consigna: Actor, Precondición, Flujo
+> Actualizado en TP4. Formato de la consigna: Actor, Precondición, Flujo
 > principal, Flujo alternativo, Postcondición.
 
 ## Diagrama general
@@ -74,11 +74,11 @@ o un grupo pequeño de amigos). No hay administradores ni otros actores.
 
 - **Actor**: Usuario
 - **Precondición**: el catálogo está cargado e indexado.
-- **Objetivo**: encontrar un lugar por nombre completo y ver cómo lo resuelven las tres estructuras de búsqueda.
+- **Objetivo**: encontrar un lugar por nombre completo y ver cómo lo resuelven las cuatro estructuras de búsqueda.
 - **Flujo principal**:
   1. El usuario selecciona "Buscar por nombre exacto (comparar estrategias)".
   2. El sistema pide el nombre completo del lugar.
-  3. El usuario elige con qué estrategia buscar: secuencial, binaria, árbol BST, o las tres.
+  3. El usuario elige con qué estrategia buscar: secuencial, binaria, árbol BST, árbol AVL, o las cuatro.
   4. El sistema normaliza el nombre (minúsculas, sin tildes) y ejecuta la búsqueda elegida.
   5. El sistema muestra el lugar encontrado y el tiempo que tardó cada estrategia.
 - **Flujo alternativo**: si el nombre no existe, cada estrategia informa que no lo encontró y devuelve `None`.

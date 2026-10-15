@@ -1,6 +1,6 @@
 # Requerimientos — ¿Dónde vamos?
 
-> Estado: TP3. Se actualiza en cada etapa con lo que se implementa.
+> Estado: TP4. Se actualiza en cada etapa con lo que se implementa.
 > Los IDs (`RFxx` / `RNFxx`) son estables: en la defensa se citan tal cual.
 
 ## Alcance
@@ -34,12 +34,13 @@ uso cercano al que realmente necesitamos resolver.
 | TP1 | Modelo de dominio, catálogo, terminal v1, 14 pruebas | 01, 02, 03, 05, README |
 | TP2 | Segunda estrategia de búsqueda (binaria) + experimentos | 01, 04, 05, `docs/tp2-experimentos.md`, README |
 | TP3 | Árbol binario de búsqueda integrado al catálogo, terminal v2 | 01, 02, 03, 04, 05, `docs/tp3-arbol-binario.md`, README |
+| TP4 | Árbol AVL como cuarta estrategia de búsqueda + demo de desbalance BST vs AVL | 01, 02, 03, 04, 05, `docs/tp4-avl.md`, README |
 
 ## Requerimientos funcionales (RF)
 
 | ID | Requerimiento | Estado |
 |---|---|---|
-| RF01 | El sistema debe permitir buscar un lugar por nombre | ✅ TP1 (secuencial) · ✅ TP2 (binaria) · ✅ TP3 (BST) |
+| RF01 | El sistema debe permitir buscar un lugar por nombre | ✅ TP1 (secuencial) · ✅ TP2 (binaria) · ✅ TP3 (BST) · ✅ TP4 (AVL) |
 | RF02 | El sistema debe permitir listar lugares según una categoría | ✅ TP1 |
 | RF03 | El sistema debe mostrar el Top 10 de lugares mejor valorados | ⏳ TP6 (heap) |
 | RF04 | El sistema debe mostrar lugares relacionados con un lugar dado | ⏳ TP7 (grafo) |
@@ -61,7 +62,7 @@ uso cercano al que realmente necesitamos resolver.
 > - Devuelve el `Lugar` cuyo nombre coincide con el buscado, o `None` si no existe.
 > - No distingue mayúsculas, minúsculas ni tildes: `"LA BIELA"`, `"la biela"` y `"La Biela"` devuelven lo mismo; `"gastronomía"` encuentra `"Gastronomia"`. Ojo: no recorta espacios sobrantes, eso no está implementado.
 > - Con 100.000 lugares responde en menos de 0,03 ms por búsqueda (medido: 0,0060 ms binaria y 0,0205 ms BST).
-> - Ofrece las tres estrategias (secuencial, binaria, BST) y cronometra cada una; las tres devuelven el mismo resultado.
+> - Ofrece las cuatro estrategias (secuencial, binaria, BST y AVL) y cronometra cada una; las cuatro devuelven el mismo resultado.
 
 > **RF02 — Filtrar por categoría**
 > - Devuelve todos los lugares de la categoría indicada.
@@ -86,16 +87,17 @@ uso cercano al que realmente necesitamos resolver.
 
 | ID | Requerimiento | Verificación | Estado |
 |---|---|---|---|
-| RNF01 | La búsqueda debe mantener un tiempo de respuesta aceptable con un volumen superior a 1.000 lugares | TP2 + TP3 (`docs/tp2-experimentos.md`, `docs/tp3-arbol-binario.md`) | ✅ con salvedad |
+| RNF01 | La búsqueda debe mantener un tiempo de respuesta aceptable con un volumen superior a 1.000 lugares | TP2 + TP3 + TP4 (`docs/tp2-experimentos.md`, `docs/tp3-arbol-binario.md`, `docs/tp4-avl.md`) | ✅ |
 | RNF02 | El sistema debe soportar al menos 10.000 lugares sin degradar perceptiblemente la respuesta | TP2 (experimentos) | ✅ |
 | RNF03 | La interfaz debe ser usable por alguien que no conoce la implementación | Demo de la terminal | ✅ |
 | RNF04 | El proyecto debe ejecutarse con Python 3.10+ sin instalaciones extra | README | ✅ |
 
-> **Salvedad del RNF01:** se cumple con la búsqueda binaria y con el BST siempre que
-> el árbol no haya degenerado. El BST **no garantiza** O(log n): con inserciones
-> ordenadas la altura es n y la búsqueda vuelve a ser O(n). Está documentado en
-> `docs/tp3-arbol-binario.md` §9 y es el motivo del AVL del TP4. No queremos reportar
-> este RNF como cumplido sin ese matiz.
+> **Salvedad del RNF01 (cerrada en TP4):** el RNF se cumple con la búsqueda binaria
+> y, desde el TP4, con el AVL, que garantiza O(log n) sin importar cómo lleguen las
+> claves. El BST por sí solo **no** alcanzaba: con inserciones ordenadas degenera
+> (altura = n) y la búsqueda vuelve a O(n), documentado en `docs/tp3-arbol-binario.md`
+> §9. Ese fue el motivo del AVL del TP4 (`docs/tp4-avl.md`). Damos el RNF por cumplido
+> con el AVL, pero conservamos el matiz de que el BST solo no lo garantiza.
 
 ## Ejemplo de uso (input/output)
 
@@ -108,29 +110,37 @@ uso cercano al que realmente necesitamos resolver.
 3. Filtrar por categoría
 4. Ver participantes por salida
 5. Buscar por nombre exacto (comparar estrategias)
+6. Comparar BST vs AVL (desbalance)
 0. Salir
 ---------------------------------------------
 Opción: 5
 Nombre exacto: la biela
 
 Estrategias:
-  1) Secuencial  O(n)
-  2) Binaria     O(log n)
-  3) Arbol BST   O(log n)
-  4) Las tres
-Estrategia: 4
+  1) Secuencial   O(n): recorre la lista
+  2) Binaria      O(log n): lista ordenada
+  3) Árbol BST    O(log n) promedio: índice BST
+  4) Árbol AVL    O(log n) garantizado: índice AVL
+  5) Las cuatro
+Estrategia: 5
 
---- Secuencial (O(n)) ---
+--- Secuencial (O(n): recorre la lista) ---
   La Biela — cafeteria (Recoleta) [⭐ 4.2 | $ | 08:00-00:00]
-  Tiempo: 0.09440 ms
+  Tiempo: 0.14310 ms
 
---- Binaria (O(log n)) ---
+--- Binaria (O(log n): lista ordenada) ---
   La Biela — cafeteria (Recoleta) [⭐ 4.2 | $ | 08:00-00:00]
-  Tiempo: 0.01730 ms
+  Tiempo: 0.00880 ms
 
---- Arbol BST (O(log n)) ---
+--- Árbol BST (O(log n) promedio: índice BST) ---
   La Biela — cafeteria (Recoleta) [⭐ 4.2 | $ | 08:00-00:00]
-  Tiempo: 0.01300 ms
+  Tiempo: 0.00860 ms
+
+--- Árbol AVL (O(log n) garantizado: índice AVL) ---
+  La Biela — cafeteria (Recoleta) [⭐ 4.2 | $ | 08:00-00:00]
+  Tiempo: 0.00640 ms
+
+Catálogo: 50 lugares · altura del BST: 10 niveles · altura del AVL: 7 niveles
 ```
 
 ## Fuera de alcance (por ahora)

@@ -74,7 +74,7 @@ class Terminal:
             )
 
     def _buscar_exacto(self) -> None:
-        """Compara las tres estrategias de búsqueda exacta sobre una consulta."""
+        """Compara las cuatro estrategias de búsqueda exacta sobre una consulta."""
         nombre = input("Nombre exacto: ").strip()
 
         if not nombre:
