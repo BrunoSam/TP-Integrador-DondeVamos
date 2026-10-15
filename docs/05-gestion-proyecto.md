@@ -2,6 +2,7 @@
 
 - **Tablero:** https://trello.com/b/s3XjcekO/tp-integrador-estructuras-de-datos-donde-vamos
 - **Metodología:** Scrum simplificado — un sprint por TP, columnas: `Backlog · En progreso · En revisión · Hecho`.
+- **Seguimiento:** las historias de cada TP se cargan en el tablero de Trello a medida que se escriben en este documento; cada tarjeta lleva la historia + su criterio de aceptación y queda en la columna que refleja su estado real (`Backlog` si no arrancó, `En Progreso`/`En Revisión` si está en curso, `Hecho` si ya está).
 - **Integrantes:** Alan Ledesma, Natalia Elias y Bruno Sammarco.
 
 ---
