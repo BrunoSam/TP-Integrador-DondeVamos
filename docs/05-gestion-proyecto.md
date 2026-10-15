@@ -147,6 +147,6 @@ Qué mejorar:
 
 ## Pendientes de gestión
 
-- [ ] Cargar las historias de TP3 y TP4 como tarjetas en el tablero de Trello.
+- [x] Cargar las historias de TP3 y TP4 como tarjetas en el tablero de Trello. (2026-10-15: 7 historias de TP4 en `Hecho`; TP3 ya estaba representado y sus 3 tarjetas completadas se reubicaron de `En Progreso` a `Hecho`; `Ver Top 10` y `Ver lugares relacionados` quedaron en `Backlog`.)
 - [ ] Enviar la nómina del grupo al docente.
 - [x] Abrir el TP4 con commits por unidad de trabajo, como en el TP2: estructura AVL, integración en el catálogo y medición.
