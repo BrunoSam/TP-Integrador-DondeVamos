@@ -1,6 +1,6 @@
 # Casos de uso — ¿Dónde vamos?
 
-> Actualizado en TP4. Formato de la consigna: Actor, Precondición, Flujo
+> Actualizado en TP5. Formato de la consigna: Actor, Precondición, Flujo
 > principal, Flujo alternativo, Postcondición.
 
 ## Diagrama general
@@ -13,6 +13,7 @@ graph TD
     U -->|"3"| CU3["Filtrar por categoría"]
     U -->|"4"| CU4["Ver participantes por salida"]
     U -->|"5"| CU5["Buscar por nombre exacto<br/>comparando estrategias"]
+    U -->|"7"| CU8["Explorar categorías<br/>(árbol general)"]
     U -->|"⏳ TP6"| CU6["Ver Top 10"]
     U -->|"⏳ TP7+"| CU7["Ver lugares relacionados"]
 ```
@@ -83,6 +84,23 @@ o un grupo pequeño de amigos). No hay administradores ni otros actores.
   5. El sistema muestra el lugar encontrado y el tiempo que tardó cada estrategia.
 - **Flujo alternativo**: si el nombre no existe, cada estrategia informa que no lo encontró y devuelve `None`.
 - **Postcondición**: el usuario vio el lugar y el tiempo de cada estrategia. Si usó la binaria, el catálogo quedó ordenado alfabéticamente (es el requisito de `buscar_binaria`).
+
+## Caso de uso: Explorar categorías
+
+- **Actor**: Usuario
+- **Precondición**: el catálogo y la jerarquía de categorías están cargados.
+- **Objetivo**: encontrar un lugar yendo de lo general a lo específico (comer, tomar algo…) en vez de saber su nombre o su categoría exacta.
+- **Flujo principal**:
+  1. El usuario selecciona "Explorar categorías" y elige "Navegar la jerarquía".
+  2. El sistema muestra dónde está el usuario (la ruta desde la raíz) y los elementos de ese nivel, con la cantidad de lugares de cada rama.
+  3. El usuario elige un número para entrar a un grupo o categoría, o `0` para subir un nivel.
+  4. Al llegar a una categoría, el sistema lista sus lugares con la puntuación; al elegir uno muestra todos sus datos.
+- **Flujos alternativos**:
+  - *Ver lugares de una rama*: el usuario indica un grupo o categoría (sin distinguir tildes ni mayúsculas) y el sistema muestra todos los lugares de esa rama, a cualquier profundidad.
+  - *Buscar en el árbol*: el usuario ingresa un texto y el sistema muestra la ruta completa de cada nodo cuyo nombre lo contiene.
+  - *Ver recorridos*: el sistema muestra los grupos y categorías en preorden, postorden y por niveles, desde la raíz o desde una rama elegida.
+  - Si el nombre no existe, el sistema lo informa. Si la opción de navegación no es válida, la rechaza y vuelve a preguntar.
+- **Postcondición**: el usuario vio los lugares de la rama elegida. Ninguna estructura se modifica.
 
 ---
 

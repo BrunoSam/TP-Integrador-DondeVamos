@@ -1,6 +1,6 @@
 # Requerimientos — ¿Dónde vamos?
 
-> Estado: TP4. Se actualiza en cada etapa con lo que se implementa.
+> Estado: TP5. Se actualiza en cada etapa con lo que se implementa.
 > Los IDs (`RFxx` / `RNFxx`) son estables: en la defensa se citan tal cual.
 
 ## Alcance
@@ -34,7 +34,8 @@ uso cercano al que realmente necesitamos resolver.
 | TP1 | Modelo de dominio, catálogo, terminal v1, 14 pruebas | 01, 02, 03, 05, README |
 | TP2 | Segunda estrategia de búsqueda (binaria) + experimentos | 01, 04, 05, `docs/tp2-experimentos.md`, README |
 | TP3 | Árbol binario de búsqueda integrado al catálogo, terminal v2 | 01, 02, 03, 04, 05, `docs/tp3-arbol-binario.md`, README |
-| TP4 | Árbol AVL como cuarta estrategia de búsqueda + demo de desbalance BST vs AVL | 01, 02, 03, 04, 05, `docs/tp4-avl.md`, README |
+| TP4 | AVL como cuarta estrategia de búsqueda, comparación BST vs AVL | 01, 02, 03, 04, 05, `docs/tp4-avl.md`, README |
+| TP5 | Árbol general: jerarquía de categorías y "Explorar categorías", terminal v3 | 01, 02, 03, 04, 05, `docs/tp5-arbol-general.md`, README |
 
 ## Requerimientos funcionales (RF)
 
@@ -47,9 +48,11 @@ uso cercano al que realmente necesitamos resolver.
 | RF05 | El sistema debe sugerir lugares a partir de las preferencias, la cantidad de personas, las fechas y el presupuesto del grupo | ⏳ TP10 |
 | RF06 | El sistema debe permitir ver los participantes de cada salida | ✅ TP1 |
 | RF07 | El sistema debe permitir listar todos los lugares en orden alfabético | ✅ TP3 (recorrido inorder del BST) |
+| RF08 | El sistema debe permitir explorar los lugares por una jerarquía de grupos y categorías | ✅ TP5 (árbol general) |
 
-> **Alcance real a hoy:** búsqueda (RF01), filtrado (RF02), participantes (RF06) y
-> listado (RF07). El Top 10 (RF03) sigue pendiente: aparece en la propuesta del TP0
+> **Alcance real a hoy:** búsqueda (RF01), filtrado (RF02), participantes (RF06),
+> listado (RF07) y exploración por jerarquía (RF08). El Top 10 (RF03) sigue
+> pendiente: aparece en la propuesta del TP0
 > pero no se implementó, porque necesita una estructura de ordenamiento por
 > prioridad, que es exactamente lo que trae el heap del TP6. Preferimos dejarlo
 > explícitamente pendiente antes que simularlo con un `sorted()` sobre 50 lugares.
@@ -78,6 +81,15 @@ uso cercano al que realmente necesitamos resolver.
 > - Muestra el nombre de cada salida con la lista de participantes.
 > - Si no hay salidas cargadas, avisa que no hay resultados.
 
+> **RF08 — Explorar por jerarquía**
+> - Muestra la jerarquía `raíz > grupo > categoría > lugar` con la cantidad de lugares de cada rama.
+> - Permite navegar entrando a una rama y subiendo de nivel, y ver los datos de un lugar al llegar a la hoja.
+> - Devuelve **todos** los lugares de un grupo o de una categoría, sin distinguir mayúsculas ni tildes (`"para comer"` devuelve 20 lugares; `filtrar` por esa misma palabra devuelve 0).
+> - Para cada categoría, los lugares de la rama son exactamente los que devuelve `filtrar` (hay una prueba que lo verifica).
+> - Ningún lugar queda fuera del árbol: una categoría desconocida se cuelga del grupo "Otros".
+> - Si el nombre buscado no existe, informa que no lo encontró.
+> - Ofrece los recorridos preorden, postorden y por niveles, desde la raíz o desde una rama.
+
 > **RF07 — Listado alfabético**
 > - Devuelve todos los lugares ordenados por nombre normalizado.
 > - No duplica ni pierde lugares: la cantidad devuelta es igual a la del catálogo.
@@ -103,7 +115,7 @@ uso cercano al que realmente necesitamos resolver.
 
 ```text
 =============================================
-   🌳 ¿DÓNDE VAMOS? — TERMINAL (v2)
+   🌳 ¿DÓNDE VAMOS? — TERMINAL (v3)
 =============================================
 1. Buscar lugar (coincidencia parcial)
 2. Listar todos los lugares
@@ -111,6 +123,7 @@ uso cercano al que realmente necesitamos resolver.
 4. Ver participantes por salida
 5. Buscar por nombre exacto (comparar estrategias)
 6. Comparar BST vs AVL (desbalance)
+7. Explorar categorías (árbol general)
 0. Salir
 ---------------------------------------------
 Opción: 5
@@ -143,6 +156,18 @@ Estrategia: 5
 Catálogo: 50 lugares · altura del BST: 10 niveles · altura del AVL: 7 niveles
 ```
 
+### Ejemplo de uso del RF08 (opción 7)
+
+```text
+Opción: 7
+...
+Opción: 5
+Grupo o categoría: Algo dulce
+
+--- ALGO DULCE: 5 LUGARES ---
+(los 5 lugares de la categoría Heladería)
+```
+
 ## Fuera de alcance (por ahora)
 
 - No se implementan autenticación ni perfiles de usuario.
@@ -169,5 +194,12 @@ Catálogo: 50 lugares · altura del BST: 10 niveles · altura del AVL: 7 niveles
   0,0060 ms y el árbol en 0,0205 ms, porque `bisect` es código C y el árbol camina
   ~50 nodos en Python interpretado. Lo dejamos escrito tal cual en el informe: el
   árbol aporta inserción en O(log n) sin reordenar, no velocidad en la búsqueda.
+- **El árbol general organiza, no acelera.** La jerarquía del TP5 se agrega al
+  lado de la lista y de los árboles de búsqueda: `buscar_nodo` es O(n) y no
+  compite con el BST ni con `bisect`. Lo que aporta es poder preguntar por un
+  *grupo* ("Para comer"), algo que `filtrar` no puede. Un nodo tiene un solo
+  padre, así que una categoría no puede pertenecer a dos grupos a la vez; las
+  relaciones que no son jerárquicas quedan para el grafo del TP7. Ver
+  `docs/tp5-arbol-general.md` §8.
 - **RF03 está declarado pero no implementado.** Es una decisión consciente, no un
   olvido; ver "Alcance real a hoy".

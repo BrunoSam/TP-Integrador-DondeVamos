@@ -7,15 +7,16 @@ Proyecto integrador de **Estructura de Datos**, desarrollado en Python.
 ¿Dónde vamos? es un sistema que ayuda a parejas o grupos pequeños de amigos a
 encontrar y organizar una salida considerando sus preferencias y presupuesto.
 
-Su **v2** (TP1 + TP2 + TP3 + TP4) permite:
+Su **v3** (TP1 a TP5) permite:
 
 - **Buscar un lugar** por coincidencia parcial (recorrido lineal sobre la lista).
 - **Buscar por nombre exacto** comparando **cuatro estrategias** de búsqueda: secuencial O(n), binaria O(log n) sobre lista ordenada, árbol binario de búsqueda O(log n) y **árbol AVL O(log n) garantizado**. La opción 5 de la terminal deja elegir y cronometra cada una.
 - **Comparar BST vs AVL** con el mismo catálogo insertado en orden alfabético (opción 6): muestra cómo el BST degenera y el AVL no.
 - **Listar** todos los lugares en orden de carga o **en orden alfabético** (recorrido *inorder* del árbol).
 - **Filtrar** por categoría y **ver** los participantes de cada salida.
+- **Explorar categorías** (opción 7): una jerarquía `Dónde vamos > Para comer > Parrilla > lugares` implementada con un **árbol general**. Se puede navegar nivel por nivel, buscar un nodo y ver su ruta, pedir **todos los lugares de un grupo** (algo que `filtrar` no puede) y ver los recorridos preorden, postorden y por niveles.
 
-Los árboles del TP3 y del TP4 se integraron como **índices complementarios**, no
+Los árboles del TP3, TP4 y TP5 se integraron como **estructuras complementarias**, no
 como reemplazo de la lista: `filtrar` y la búsqueda parcial siguen siendo lineales a
 propósito, porque un árbol no puede responderlas en O(log n).
 
@@ -28,7 +29,7 @@ propósito, porque un árbol no puede responderlas en O(log n).
 | TP2 | Análisis de algoritmos — secuencial vs binaria | ✅ |
 | TP3 | Árbol binario de búsqueda | ✅ |
 | TP4 | AVL | ✅ |
-| TP5 | Árbol general | ⏳ |
+| TP5 | Árbol general | ✅ |
 | TP6 | Heap (Top 10 de lugares) | ⏳ |
 | TP7 | Grafo (lugares relacionados) | ⏳ |
 | TP8 | BFS / DFS | ⏳ |
@@ -49,8 +50,14 @@ No requiere instalar nada: solo Python 3.10 o superior y la biblioteca estándar
 python -m unittest discover tests
 ```
 
-112 pruebas (`tests/test_catalogo.py`, `tests/test_arbol_binario.py` y
-`tests/test_arbol_avl.py`), sin dependencias externas.
+199 pruebas (`tests/test_catalogo.py`, `tests/test_arbol_binario.py`,
+`tests/test_arbol_avl.py`, `tests/test_arbol_general.py`,
+`tests/test_catalogo_categorias.py` y `tests/test_terminal_categorias.py`), sin
+dependencias externas.
+
+> Una prueba de escala (`test_altura_arbol_escala_con_el_logaritmo_de_n`) usa los
+> datasets sintéticos, que están en `.gitignore`: en un clon limpio hay que correr
+> primero `python datos/generar.py`.
 
 ## Experimentos
 
@@ -60,19 +67,21 @@ python algoritmos/experimentos/medicion.py       # mide las tres estrategias del
 python algoritmos/experimentos/grafico.py        # guarda docs/capturas/experimento-tp3.png
 python algoritmos/experimentos/medicion_avl.py   # BST vs AVL por orden de inserción (TP4)
 python algoritmos/experimentos/grafico_avl.py    # guarda docs/capturas/experimento-tp4.png
+python algoritmos/experimentos/ejemplo_recorridos.py  # recorridos del árbol general (TP5)
 ```
 
 - Informe TP2 (secuencial vs binaria): [`docs/tp2-experimentos.md`](docs/tp2-experimentos.md)
 - Informe TP3 (agrega el BST): [`docs/tp3-arbol-binario.md`](docs/tp3-arbol-binario.md)
 - Informe TP4 (BST vs AVL y desbalance): [`docs/tp4-avl.md`](docs/tp4-avl.md)
+- Informe TP5 (árbol general y jerarquía de categorías): [`docs/tp5-arbol-general.md`](docs/tp5-arbol-general.md)
 
 ## Documentación
 
 | Doc | Contenido |
 |---|---|
 | [`docs/01-requerimientos.md`](docs/01-requerimientos.md) | Alcance, RF/RNF con estado estable, criterios de aceptación y observaciones |
-| [`docs/02-casos-de-uso.md`](docs/02-casos-de-uso.md) | Diagrama general y 5 casos de uso textuales |
-| [`docs/03-diagrama-clases.md`](docs/03-diagrama-clases.md) | Clases del dominio, `Catalogo`, `ArbolBinarioBusqueda` y `ArbolAVL` |
+| [`docs/02-casos-de-uso.md`](docs/02-casos-de-uso.md) | Diagrama general y 6 casos de uso textuales |
+| [`docs/03-diagrama-clases.md`](docs/03-diagrama-clases.md) | Clases del dominio, `Catalogo`, `ArbolBinarioBusqueda`, `ArbolAVL` y `ArbolGeneral` |
 | [`docs/04-diagrama-datos.md`](docs/04-diagrama-datos.md) | Flujo de datos: de los JSON crudos a la terminal, pasando por cada estructura |
 | [`docs/05-gestion-proyecto.md`](docs/05-gestion-proyecto.md) | Tablero, sprints, historias de usuario y retros |
 
@@ -101,19 +110,22 @@ TP0_Donde_Vamos/
 │   ├── tp2-experimentos.md
 │   ├── tp3-arbol-binario.md
 │   ├── tp4-avl.md
+│   ├── tp5-arbol-general.md
 │   └── capturas/
 ├── modelos/
 │   ├── lugar.py
 │   └── salida.py
 ├── servicios/
-│   └── catalogo.py          ← búsqueda secuencial, binaria, BST y AVL
+│   └── catalogo.py          ← búsqueda secuencial, binaria, BST y AVL + jerarquía de categorías
 ├── estructuras/
 │   ├── arbol_binario.py     ← TP3: NodoArbol y ArbolBinarioBusqueda
-│   └── arbol_avl.py         ← TP4: NodoAVL y ArbolAVL
+│   ├── arbol_avl.py         ← TP4: NodoAVL y ArbolAVL
+│   └── arbol_general.py     ← TP5: NodoGeneral y ArbolGeneral (n-ario)
 ├── ui/
-│   └── terminal.py          ← v2 (opción 5: estrategias · opción 6: BST vs AVL)
+│   └── terminal.py          ← v3 (5: estrategias · 6: BST vs AVL · 7: explorar categorías)
 ├── datos/
 │   ├── lugares.json
+│   ├── categorias.json      ← TP5: jerarquía grupos > categorías
 │   ├── salidas.json
 │   └── generar.py           ← TP2: datasets sintéticos (los generados están en .gitignore)
 ├── algoritmos/
@@ -121,11 +133,15 @@ TP0_Donde_Vamos/
 │       ├── medicion.py      ← TP2 + TP3
 │       ├── grafico.py
 │       ├── medicion_avl.py  ← TP4
-│       └── grafico_avl.py
+│       ├── grafico_avl.py
+│       └── ejemplo_recorridos.py  ← TP5
 └── tests/
     ├── test_catalogo.py
     ├── test_arbol_binario.py
-    └── test_arbol_avl.py
+    ├── test_arbol_avl.py
+    ├── test_arbol_general.py            ← TP5
+    ├── test_catalogo_categorias.py      ← TP5
+    └── test_terminal_categorias.py      ← TP5
 ```
 
 ## Evolución
@@ -154,3 +170,14 @@ inserción: con 10.000 datos ordenados el BST queda con altura 10.000 y el AVL c
 altura 14 (buscar pasa de 1,52 ms a 0,0019 ms). El trade-off quedó documentado sin
 disimular: con datos aleatorios el AVL construye ~2,4× más lento. Ver
 [`docs/tp4-avl.md`](docs/tp4-avl.md).
+
+En **TP5** se sumó una estructura de otra naturaleza: un **árbol general (n-ario)**
+que no sirve para buscar más rápido sino para **organizar por significado**. El
+catálogo ahora tiene una jerarquía `Dónde vamos > grupo > categoría > lugar`
+(61 nodos, altura 4, cargada desde `datos/categorias.json`) que responde lo que la
+lista plana no puede: `lugares_de_rama('Para comer')` devuelve 20 lugares, mientras
+`filtrar('Para comer')` devuelve 0. Se integró como la opción 7 de la terminal
+(versión 3) con navegación por niveles, búsqueda con ruta y los tres recorridos.
+El informe deja explícito lo que el árbol **no** aporta: no acelera ninguna
+búsqueda y un nodo solo puede tener un padre, límite que motiva el grafo del TP7.
+Ver [`docs/tp5-arbol-general.md`](docs/tp5-arbol-general.md).

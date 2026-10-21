@@ -19,6 +19,8 @@ graph LR
         LISTA --> ORD["Lista ordenada + arreglo de claves<br/>ordenar_por_titulo · TP2"]
         LISTA --> BST["Árbol BST por nombre normalizado<br/>ArbolBinarioBusqueda · TP3"]
         LISTA --> AVL["Árbol AVL por nombre normalizado<br/>ArbolAVL · TP4"]
+        LISTA --> ARBCAT["Árbol general de categorías<br/>ArbolGeneral · TP5"]
+        JER["Jerarquía de grupos<br/>datos/categorias.json"] --> ARBCAT
     end
 
     subgraph Busqueda
@@ -27,6 +29,7 @@ graph LR
         BST --> S3["buscar_arbol<br/>BST · O(log n)"]
         AVL --> S5["buscar_avl<br/>AVL · O(log n) garantizado"]
         BST --> S4["inorder<br/>listado alfabético"]
+        ARBCAT --> S6["lugares_de_rama · ruta_de<br/>recorridos · O(n)"]
     end
 
     subgraph Servicio
@@ -35,10 +38,11 @@ graph LR
         S3 --> CAT
         S5 --> CAT
         S4 --> CAT
+        S6 --> CAT
         LISTA --> CAT
     end
 
-    CAT --> UI["Terminal v2<br/>opción 1 · opción 5 · opción 6 (BST vs AVL)"]
+    CAT --> UI["Terminal v3<br/>opción 1 · 5 · 6 (BST vs AVL) · 7 (Explorar categorías)"]
 ```
 
 ## Qué aporta cada estructura
@@ -49,6 +53,7 @@ graph LR
 | **Lista ordenada + `_claves`** | `buscar_binaria` en O(log n) | Es la estrategia del TP2. Se conserva como comparación y para catálogos que nunca mutan. |
 | **Árbol BST** | `buscar_arbol` en O(log n) **y** inserción en O(log n) sin reordenar todo | La lista ordenada obliga a un `sort` de O(n log n) por cada lugar nuevo; el árbol inserta en O(log n) sin tocar el resto. |
 | **Árbol AVL** | `buscar_avl` en **O(log n) garantizado** | Es el BST más rotaciones: mantiene la altura en O(log n) sin importar el orden de inserción, que es la debilidad que el BST del TP3 sí tiene. |
+| **Árbol general de categorías** | Preguntar por un **grupo** ("Para comer"), navegar de lo general a lo específico y mostrar la ruta de un nodo | Ni la lista ni los árboles de búsqueda expresan jerarquía: `filtrar('Para comer')` devuelve 0. No acelera ninguna búsqueda (es O(n)): organiza, no indexa. |
 
 ## Dónde entra cada operación
 
@@ -63,6 +68,10 @@ graph LR
 4. **Listado**: en orden de carga (la lista) o alfabético (el `inorder` del árbol).
 5. **Demo del TP4** (opción 6): reconstruye BST y AVL con el mismo catálogo en orden
    alfabético para mostrar la degeneración del BST frente al AVL.
+6. **Jerarquía** (opción 7, TP5): `indexar()` arma el árbol general a partir de la
+   lista y de `datos/categorias.json` (cargado con `cargar_categorias_desde_json`).
+   Cada `Lugar` cuelga como hoja de su categoría —la **misma instancia** que usan
+   los demás índices— y `agregar_lugar()` lo mantiene al día.
 
 Este diagrama muestra solo lo implementado. Las cuatro estrategias conviven: la
 terminal ofrece las cuatro en la opción 5, y los recorridos que no son de búsqueda

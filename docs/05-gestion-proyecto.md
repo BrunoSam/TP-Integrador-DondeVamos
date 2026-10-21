@@ -146,8 +146,47 @@ Qué mejorar:
 
 ---
 
+## Sprint TP5 (Árbol general)
+
+Historias:
+
+- [x] Como equipo queremos definir una jerarquía natural del dominio y no inventar una para cumplir.
+  - Criterio: `Dónde vamos > grupo > categoría > lugar`, cargada desde `datos/categorias.json` (no hardcodeada) y con todas las categorías reales cubiertas.
+- [x] Como equipo queremos un árbol general genérico, no atado al dominio.
+  - Criterio: `estructuras/arbol_general.py` con la `clave` inyectada como `callable`; no importa nada de `servicios/` ni de `modelos/`.
+- [x] Como equipo queremos recorridos y búsquedas sobre el árbol.
+  - Criterio: preorden, postorden y por niveles, todos iterativos; búsqueda exacta (BFS y DFS) y parcial; ruta, nivel, altura y dibujo.
+- [x] Como usuario quiero explorar los lugares de lo general a lo específico.
+  - Criterio: opción 7 de la terminal (v3) con navegación por niveles, búsqueda con ruta, lugares de una rama y recorridos.
+- [x] Como usuario quiero preguntar por un grupo entero ("Para comer"), no solo por una categoría.
+  - Criterio: `lugares_de_rama('Para comer')` devuelve 20 lugares; para cada categoría coincide exactamente con `filtrar`.
+- [x] Como equipo queremos que ningún lugar quede afuera de la jerarquía.
+  - Criterio: categoría desconocida va al grupo "Otros"; `agregar_lugar` mantiene el árbol al día.
+- [x] Como equipo queremos ejemplos de recorridos reproducibles.
+  - Criterio: `algoritmos/experimentos/ejemplo_recorridos.py` con el árbol de la consigna y el catálogo real.
+- [x] Como equipo queremos documentar el trabajo sin disimular los límites.
+  - Criterio: `docs/tp5-arbol-general.md` con diseño, complejidad, ejemplos y una sección de lo que el árbol **no** aporta.
+- [ ] Como equipo queremos entregar el TP5 en commits por unidad de trabajo.
+  - Criterio: estructura `ArbolGeneral`, integración en el catálogo, terminal v3, pruebas y documentación en commits separados.
+
+**Retro TP5**:
+
+Este TP cambió la pregunta respecto de los dos anteriores: el BST y el AVL se justificaban por **velocidad de búsqueda**; el árbol general no acelera nada (`buscar` es O(n)) y lo dejamos escrito así. Su valor es semántico: permite preguntar por "Para comer", que la lista plana contesta con 0 resultados. Por eso no hay medición de tiempos en este TP: compararlo contra `bisect` habría sido medir una cosa que no hace.
+
+Decisiones que sostuvieron el resto: la jerarquía como **dato** (`categorias.json`) y no como código, los lugares como **hojas** con la misma instancia que usan los demás índices, y todo **iterativo** porque, a diferencia del AVL, un árbol general no tiene altura acotada. Una prueba cruza el árbol con `filtrar` para que los dos nunca se contradigan.
+
+Qué mejorar:
+
+- Un nodo tiene un solo padre: "Cafetería" no puede estar en dos grupos. Es el límite natural que justifica el grafo del TP7.
+- El árbol conoce nombres, no zonas: buscar "almagro" ahí no encuentra nada. Sigue valiendo `buscar_parcial`.
+- `eliminar` existe en el árbol pero el catálogo no expone borrar lugares; habría que decidir cómo mantener coherentes lista, BST, AVL y jerarquía.
+- Regenerar el diagrama PNG de clases (`docs/capturas/`) con `ArbolGeneral`; hoy solo está actualizado el bloque Mermaid.
+
+---
+
 ## Pendientes de gestión
 
 - [x] Cargar las historias de TP3 y TP4 como tarjetas en el tablero de Trello. (2026-10-15: 7 historias de TP4 en `Hecho`; TP3 ya estaba representado y sus 3 tarjetas completadas se reubicaron de `En Progreso` a `Hecho`; `Ver Top 10` y `Ver lugares relacionados` quedaron en `Backlog`.)
+- [x] Cargar las historias de TP5 como tarjetas en el tablero de Trello. (2026-10-21: las 8 historias de TP5, de `TP5-01` a `TP5-08`, se movieron a `Hecho` al cerrar el sprint.)
 - [ ] Enviar la nómina del grupo al docente.
 - [x] Abrir el TP4 con commits por unidad de trabajo, como en el TP2: estructura AVL, integración en el catálogo y medición.
