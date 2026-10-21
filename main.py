@@ -8,6 +8,7 @@ def main() -> None:
     sys.stdout.reconfigure(encoding="utf-8")
     catalogo = Catalogo()
     catalogo.cargar_desde_json("datos/lugares.json")
+    catalogo.cargar_categorias_desde_json("datos/categorias.json")
     catalogo.cargar_salidas_desde_json("datos/salidas.json")
     print(f"Se cargaron {len(catalogo)} lugares.")
     Terminal(catalogo).iniciar()

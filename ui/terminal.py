@@ -34,6 +34,8 @@ class Terminal:
                 self._buscar_exacto()
             elif opcion == "6":
                 self._comparar_arboles()
+            elif opcion == "7":
+                self._explorar_categorias()
             elif opcion == "0":
                 print("¡Hasta la próxima!")
                 break
@@ -44,7 +46,7 @@ class Terminal:
 
     def _mostrar_menu(self) -> None:
         print("=" * 45)
-        print("   🌳 ¿DÓNDE VAMOS? — TERMINAL (v2)")
+        print("   🌳 ¿DÓNDE VAMOS? — TERMINAL (v3)")
         print("=" * 45)
         print("1. Buscar lugar (coincidencia parcial)")
         print("2. Listar todos los lugares")
@@ -52,6 +54,7 @@ class Terminal:
         print("4. Ver participantes por salida")
         print("5. Buscar por nombre exacto (comparar estrategias)")
         print("6. Comparar BST vs AVL (desbalance)")
+        print("7. Explorar categorías (árbol general)")
         print("0. Salir")
         print("-" * 45)
 
@@ -74,7 +77,7 @@ class Terminal:
             )
 
     def _buscar_exacto(self) -> None:
-        """Compara las cuatro estrategias de búsqueda exacta sobre una consulta."""
+        """Compara las tres estrategias de búsqueda exacta sobre una consulta."""
         nombre = input("Nombre exacto: ").strip()
 
         if not nombre:
@@ -135,6 +138,124 @@ class Terminal:
         print("\nEl BST degenera en una lista enlazada (altura = n): buscar pasa")
         print("de O(log n) a O(n). El AVL se rebalancea con rotaciones y mantiene")
         print("la altura en O(log n) sin importar el orden de inserción.")
+
+    def _explorar_categorias(self) -> None:
+        """Submenú del TP5: la jerarquía grupos > categorías > lugares."""
+        while True:
+            print("\n--- EXPLORAR CATEGORÍAS ---")
+            print("1. Navegar la jerarquía (entrar y subir de nivel)")
+            print("2. Ver el árbol de categorías")
+            print("3. Ver el árbol completo (con los lugares)")
+            print("4. Buscar en el árbol y ver su ruta")
+            print("5. Ver los lugares de una rama (ej: todo \"Para comer\")")
+            print("6. Recorridos: preorden, postorden y por niveles")
+            print("0. Volver al menú principal")
+
+            opcion = input("Opción: ").strip()
+
+            if opcion == "1":
+                self._navegar_categorias()
+            elif opcion == "2":
+                print()
+                print("\n".join(self._catalogo.explorar_categorias()))
+            elif opcion == "3":
+                print()
+                print("\n".join(self._catalogo.explorar_categorias(incluir_lugares=True)))
+            elif opcion == "4":
+                self._buscar_en_arbol()
+            elif opcion == "5":
+                self._lugares_de_rama()
+            elif opcion == "6":
+                self._mostrar_recorridos()
+            elif opcion == "0":
+                break
+            else:
+                print("Opción inválida.")
+
+    def _navegar_categorias(self) -> None:
+        """Navegación interactiva: se baja eligiendo un número y se sube con 0."""
+        actual = self._catalogo.arbol_categorias.raiz
+
+        while True:
+            print(f"\nEstás en: {self._catalogo.ruta_de(actual)}")
+            hijos = actual.hijos
+
+            if not hijos:
+                print("  (no hay nada más abajo)")
+            for numero, hijo in enumerate(hijos, start=1):
+                print(f"  {numero}. {self._catalogo.describir_nodo(hijo)}")
+
+            destino = "Volver" if actual.padre is None else "Subir un nivel"
+            print(f"  0. {destino}")
+
+            opcion = input("Elegí: ").strip()
+
+            if opcion == "0":
+                if actual.padre is None:
+                    return
+                actual = actual.padre
+            elif opcion.isdigit() and 1 <= int(opcion) <= len(hijos):
+                elegido = hijos[int(opcion) - 1]
+                if elegido.valor is not None:
+                    print()
+                    print(elegido.valor)
+                else:
+                    actual = elegido
+            else:
+                print("Opción inválida.")
+
+    def _buscar_en_arbol(self) -> None:
+        texto = input("Texto a buscar (grupo, categoría o lugar): ").strip()
+
+        if not texto:
+            print("No escribiste nada.")
+            return
+
+        nodos = self._catalogo.buscar_nodos(texto)
+
+        if not nodos:
+            print(f"No encontramos '{texto}' en el árbol.")
+            return
+
+        print(f"\n--- {len(nodos)} COINCIDENCIAS ---")
+        for nodo in nodos:
+            print(f"  {self._catalogo.ruta_de(nodo)}")
+
+    def _lugares_de_rama(self) -> None:
+        nombre = input("Grupo o categoría: ").strip()
+
+        lugares = self._catalogo.lugares_de_rama(nombre)
+
+        if lugares is None:
+            print(f"No existe '{nombre}' en el árbol.")
+        elif not lugares:
+            print(f"'{nombre}' no tiene lugares cargados.")
+        else:
+            print(f"\n--- {nombre.upper()}: {len(lugares)} LUGARES ---")
+            for lugar in lugares:
+                print()
+                print(lugar)
+
+    def _mostrar_recorridos(self) -> None:
+        """Los tres recorridos sobre grupos y categorías, con qué aporta cada uno."""
+        nombre = input("Recorrer desde (Enter = toda la jerarquía): ").strip()
+
+        desde = None
+        if nombre:
+            desde = self._catalogo.buscar_nodo(nombre)
+            if desde is None:
+                print(f"No existe '{nombre}' en el árbol.")
+                return
+
+        recorridos = (
+            ("preorden", "Preorden", "el padre antes que sus hijos (se lee como un índice)"),
+            ("postorden", "Postorden", "los hijos antes que su padre (lo específico primero)"),
+            ("niveles", "Por niveles", "de lo general a lo específico, nivel por nivel"),
+        )
+        for clave, titulo, explicacion in recorridos:
+            etiquetas = self._catalogo.recorrer_categorias(clave, desde)
+            print(f"\n--- {titulo}: {explicacion} ---")
+            print("  " + " → ".join(etiquetas))
 
     def _listar(self) -> None:
         print("\nOrden:")
