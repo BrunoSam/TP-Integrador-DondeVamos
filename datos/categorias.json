@@ -1,0 +1,8 @@
+{
+  "raiz": "Dónde vamos",
+  "grupos": {
+    "Para comer": ["Parrilla", "Restaurante", "Bodegón", "Pizzería"],
+    "Para tomar algo": ["Bar", "Cafetería"],
+    "Algo dulce": ["Heladería"]
+  }
+}
