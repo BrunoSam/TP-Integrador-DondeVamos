@@ -1,4 +1,4 @@
-# ¿Dónde vamos?
+﻿# ¿Dónde vamos?
 
 Proyecto integrador de **Estructura de Datos**, desarrollado en Python.
 
@@ -7,7 +7,7 @@ Proyecto integrador de **Estructura de Datos**, desarrollado en Python.
 ¿Dónde vamos? es un sistema que ayuda a parejas o grupos pequeños de amigos a
 encontrar y organizar una salida considerando sus preferencias y presupuesto.
 
-Su **v3** (TP1 a TP5) permite:
+Su **v4** (TP1 a TP6) permite:
 
 - **Buscar un lugar** por coincidencia parcial (recorrido lineal sobre la lista).
 - **Buscar por nombre exacto** comparando **cuatro estrategias** de búsqueda: secuencial O(n), binaria O(log n) sobre lista ordenada, árbol binario de búsqueda O(log n) y **árbol AVL O(log n) garantizado**. La opción 5 de la terminal deja elegir y cronometra cada una.

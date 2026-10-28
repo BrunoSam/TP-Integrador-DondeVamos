@@ -1,3 +1,23 @@
+﻿
+class _ItemPrioridad:
+    def __init__(self, prioridad, desempate, elemento):
+        self.prioridad = prioridad
+        self.desempate = desempate
+        self.elemento = elemento
+
+    def __lt__(self, otro):
+        if self.prioridad != otro.prioridad:
+            return self.prioridad < otro.prioridad
+        return self.desempate < otro.desempate
+
+    def __gt__(self, otro):
+        if self.prioridad != otro.prioridad:
+            return self.prioridad > otro.prioridad
+        return self.desempate > otro.desempate
+
+    def __eq__(self, otro):
+        return self.prioridad == otro.prioridad and self.desempate == otro.desempate
+from estructuras.heap_binario import HeapBinario
 import bisect
 import json
 import time
@@ -329,3 +349,23 @@ class Catalogo:
 
     def __len__(self):
         return len(self._lugares)
+
+    def obtener_top_n(self, n=5, clave_prioridad=None):
+        if n <= 0:
+            return []
+        heap = HeapBinario(es_max=True)
+        for lugar in self._lugares:
+            if clave_prioridad is None:
+                prioridad = getattr(lugar, 'puntuacion', 0)
+            else:
+                prioridad = clave_prioridad(lugar)
+            try:
+                pval = float(prioridad)
+            except Exception:
+                pval = 0
+            heap.insertar(_ItemPrioridad(pval, _normalizar(lugar.nombre), lugar))
+        items = heap.top_n(n)
+        return [it.elemento for it in items]
+
+
+

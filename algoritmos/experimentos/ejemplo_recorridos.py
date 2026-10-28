@@ -93,5 +93,5 @@ def ejemplo_catalogo() -> None:
 
 if __name__ == "__main__":
     sys.stdout.reconfigure(encoding="utf-8")
-    ejemplo_consigna()
     ejemplo_catalogo()
+    ejemplo_consigna()

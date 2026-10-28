@@ -1,4 +1,4 @@
-import time
+﻿import time
 
 from servicios.catalogo import Catalogo
 
@@ -55,6 +55,7 @@ class Terminal:
         print("5. Buscar por nombre exacto (comparar estrategias)")
         print("6. Comparar BST vs AVL (desbalance)")
         print("7. Explorar categorías (árbol general)")
+        print("8. Ver Top N recomendaciones")
         print("0. Salir")
         print("-" * 45)
 
@@ -305,3 +306,18 @@ class Terminal:
 
             for participante in salida.participantes:
                 print(f"- {participante}")
+
+    def _ver_top_n(self) -> None:
+        try:
+            n_str = input("¿Cuántos elementos mostrar en el Top-N? ").strip()
+            n = int(n_str)
+        except Exception:
+            print("Ingresá un número válido.")
+            return
+        if n <= 0:
+            print("El número debe ser mayor a 0.")
+            return
+        top = self._catalogo.obtener_top_n(n)
+        print(f"\n--- TOP {n} ---")
+        for i, lugar in enumerate(top, 1):
+            print(f"{i}. {lugar}")
