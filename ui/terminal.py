@@ -36,6 +36,8 @@ class Terminal:
                 self._comparar_arboles()
             elif opcion == "7":
                 self._explorar_categorias()
+            elif opcion == "8":
+                self._ver_top_n()
             elif opcion == "0":
                 print("¡Hasta la próxima!")
                 break
@@ -46,7 +48,7 @@ class Terminal:
 
     def _mostrar_menu(self) -> None:
         print("=" * 45)
-        print("   🌳 ¿DÓNDE VAMOS? — TERMINAL (v3)")
+        print("   🌳 ¿DÓNDE VAMOS? — TERMINAL (v4)")
         print("=" * 45)
         print("1. Buscar lugar (coincidencia parcial)")
         print("2. Listar todos los lugares")
