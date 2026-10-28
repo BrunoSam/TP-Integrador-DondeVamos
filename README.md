@@ -30,7 +30,7 @@ propósito, porque un árbol no puede responderlas en O(log n).
 | TP3 | Árbol binario de búsqueda | ✅ |
 | TP4 | AVL | ✅ |
 | TP5 | Árbol general | ✅ |
-| TP6 | Heap (Top 10 de lugares) | ⏳ |
+| TP6 | Heap (Top 10 de lugares) | ✅ |
 | TP7 | Grafo (lugares relacionados) | ⏳ |
 | TP8 | BFS / DFS | ⏳ |
 | TP9 | Caminos mínimos (Dijkstra) | ⏳ |
