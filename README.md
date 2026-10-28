@@ -15,6 +15,7 @@ Su **v4** (TP1 a TP6) permite:
 - **Listar** todos los lugares en orden de carga o **en orden alfabético** (recorrido *inorder* del árbol).
 - **Filtrar** por categoría y **ver** los participantes de cada salida.
 - **Explorar categorías** (opción 7): una jerarquía `Dónde vamos > Para comer > Parrilla > lugares` implementada con un **árbol general**. Se puede navegar nivel por nivel, buscar un nodo y ver su ruta, pedir **todos los lugares de un grupo** (algo que `filtrar` no puede) y ver los recorridos preorden, postorden y por niveles.
+- **Ver Top N recomendaciones** (opción 8): ranking dinámico de los mejores lugares por `puntuacion` usando un **heap binario manual** (max-heap, indexación 1-based), con desempate por nombre normalizado.
 
 Los árboles del TP3, TP4 y TP5 se integraron como **estructuras complementarias**, no
 como reemplazo de la lista: `filtrar` y la búsqueda parcial siguen siendo lineales a
